@@ -1,0 +1,69 @@
+# zshrc
+ 
+# 色関係
+# -------------------------------------------------
+# 色を有効にする
+autoload -U colors
+colors
+
+# 履歴
+# -------------------------------------------------
+HISTFILE=~/.zsh_history
+HISTSIZE=100000
+SAVEHIST=100000
+
+# 履歴を共有する
+setopt share_history
+# 同じコマンドが履歴に含まれる場合、履歴から古いほうのコマンドを削除する
+setopt hist_ignore_all_dups
+
+# 補完
+# --------------------------------------------------
+# 補完を有効にする
+autoload -Uz compinit
+compinit
+
+# 補完メッセージを読みやすくする
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*' format '%B%d%b'
+zstyle ':completion:*:warnings' format 'No matches for: %d'
+zstyle ':completion:*' group-name ''
+# psコマンドのプロセス名補完
+zstyle ':completion:*:processes' command 'ps x -o pid,s,args'
+
+# ブロンプト
+# ------------------------------------------------
+# プロンプトを有効にする
+autoload -Uz promptinit
+promptinit
+
+# テーマ
+prompt walters
+
+# エイリアス
+# ------------------------------------------------
+# lsの色つけ
+case ${OSTYPE} in
+  darwin*)
+    alias ls="ls -G"
+    ;;
+  *)
+    alias ls="ls --color=auto"
+    ;;
+esac
+
+alias ll="ls -al"
+alias dirs="dirs -v"
+
+# 拡張子エイリアス
+alias -s rb='ruby'
+alias -s go='go run'
+
+# オプション
+#------------------------------------------------
+
+# beepを無効に
+setopt no_beep
+
+# 拡張glob
+setopt extended_glob
