@@ -64,8 +64,9 @@ else
   colorscheme elflord
 end
 
-" Indent
-set smartindent
+" インデント
+set cindent
+set cinoptions+=:0,j1
 
 " incsearch.vim
 if s:load_plugin('incsearch.vim') && s:load_plugin('asterisk.vim')
@@ -90,6 +91,8 @@ augroup MyFileType
   autocmd FileType go,c,c++
     \ set noet sw=4
   autocmd FileType javascript,json,typescript,ruby,css,sass,scss
+    \ set et sw=2 ts=2 sts=2
+  autocmd FileType vim
     \ set et sw=2 ts=2 sts=2
 augroup END
 
