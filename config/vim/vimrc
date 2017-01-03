@@ -17,6 +17,8 @@ helptags ALL
 filetype plugin indent on
 syntax enable
 
+set backspace=indent,eol,start
+
 set nonumber
 set nowrap
 set list listchars=tab:>-,trail:-,nbsp:%,extends:>
@@ -46,20 +48,21 @@ set ruler
 set nobackup
 
 " スワップ
-silent! call mkdir($HOME . '/vimfiles/swap', 'p')
-set directory=$HOME/vimfiles/swap
+silent! call mkdir($HOME . '/.vim/swap', 'p')
+set directory=$HOME/.vim/swap
 set swapfile
 
 " UNDO
 if has('persistent-undo')
-  silent! call mkdir($HOME . '/vimfiles/undo', 'p')
+  silent! call mkdir($HOME . '/.vim/undo', 'p')
   set undodir=$HOME/vimfiles/undo
   set undofile
 endif
 
 set background=dark
-if s:load_plugin('gruvbox')
-  colorscheme gruvbox
+
+if s:load_plugin('tender')
+  colorscheme tender
 else
   colorscheme elflord
 end
@@ -67,6 +70,8 @@ end
 " インデント
 set cindent
 set cinoptions+=:0,j1
+
+set wildmenu
 
 " incsearch.vim
 if s:load_plugin('incsearch.vim') && s:load_plugin('asterisk.vim')
@@ -86,13 +91,13 @@ endif
 " FileType
 augroup MyFileType
   autocmd!
-  autocmd FileType java,php,html,xml,sql,python
+  autocmd FileType java,php
     \ set et sw=4 ts=4 sts=4
   autocmd FileType go,c,c++
-    \ set noet sw=4
-  autocmd FileType javascript,json,typescript,ruby,css,sass,scss
+    \ set noet sw=4 ts=4 sts=4
+  autocmd FileType javascript,json,typescript,css,sass,scss,html,xml
     \ set et sw=2 ts=2 sts=2
-  autocmd FileType vim
+  autocmd FileType vim,python,ruby
     \ set et sw=2 ts=2 sts=2
 augroup END
 
