@@ -6,22 +6,6 @@ scriptencoding utf-8
 set fileencodings=utf-8,cp932,euc-jp,fefault,latin
 set fileformats=unix,dos,mac
 
-if &loadplugins
-  " minpac: http://qiita.com/k-takata/items/36c240a23f88d699ce86
-  packadd minpac
-
-  call minpac#init()
-
-  call minpac#add('k-takata/minpac', {'type': 'opt'})
-
-  call minpac#add('itchyny/lightline.vim')
-  call minpac#add('oahiroaki/vim-monochrome')
-  call minpac#add('ctrlpvim/ctrlp.vim')
-
-  call minpac#add('elixir-lang/vim-elixir')
-  call minpac#add('digitaltoad/vim-pug')
-endif
-
 filetype plugin indent on
 syntax enable
 
@@ -67,12 +51,8 @@ if has('persistent-undo')
   set undofile
 endif
 
-set background=dark
-
 " default
 set expandtab shiftwidth=2 tabstop=2 softtabstop=2
-
-colorscheme monochrome
 
 " インデント
 set cindent
@@ -119,39 +99,61 @@ function! s:get_syn_info()
 endfunction
 command! SyntaxInfo call s:get_syn_info()
 
-" ctrlp.vim
-" Prefix: s
-nnoremap s <Nop>
-nnoremap sa :<C-u>CtrlP<Space>
-nnoremap sb :<C-u>CtrlPBuffer<CR>
-nnoremap sd :<C-u>CtrlPDir<CR>
-nnoremap sf :<C-u>CtrlP<CR>
-nnoremap sl :<C-u>CtrlPLine<CR>
-nnoremap sm :<C-u>CtrlPMRUFiles<CR>
-nnoremap sq :<C-u>CtrlPQuickfix<CR>
-nnoremap ss :<C-u>CtrlPMixed<CR>
-nnoremap st :<C-u>CtrlPTag<CR>
+" minpac: http://qiita.com/k-takata/items/36c240a23f88d699ce86
+silent! packadd minpac
 
-let g:ctrlp_map = '<Nop>'
-" Guess vcs root dir
-let g:ctrlp_working_path_mode = 'ra'
-" Open new file in current window
-let g:ctrlp_open_new_file = 'r'
-let g:ctrlp_extensions = ['tag', 'quickfix', 'dir', 'line', 'mixed']
-let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:18'
+if &loadplugins && exists('*minpac#init')
+  call minpac#init()
 
-" incsearch.vim
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
-map *   <Plug>(incsearch-nohl)<Plug>(asterisk-*)
-map g*  <Plug>(incsearch-nohl)<Plug>(asterisk-g*)
-map #   <Plug>(incsearch-nohl)<Plug>(asterisk-#)
-map g#  <Plug>(incsearch-nohl)<Plug>(asterisk-g#)
-map z*  <Plug>(incsearch-nohl0)<Plug>(asterisk-z*)
-map gz* <Plug>(incsearch-nohl0)<Plug>(asterisk-gz*)
-map z#  <Plug>(incsearch-nohl0)<Plug>(asterisk-z#)
-map gz# <Plug>(incsearch-nohl0)<Plug>(asterisk-gz#)
+  call minpac#add('k-takata/minpac', {'type': 'opt'})
+
+  call minpac#add('itchyny/lightline.vim')
+  call minpac#add('oahiroaki/vim-monochrome')
+  call minpac#add('ctrlpvim/ctrlp.vim')
+  call minpac#add('mattn/sonictemplate-vim')
+
+  call minpac#add('elixir-lang/vim-elixir')
+  call minpac#add('digitaltoad/vim-pug')
+  call minpac#add('leafgarland/typescript-vim')
+  call minpac#add('vim-ruby/vim-ruby')
+
+  call minpac#add('jacoborus/tender.vim')
+
+  " colorscheme
+  set background=dark
+  colorscheme tender
+
+  " ctrlp.vim
+  " Prefix: s
+  nnoremap s <Nop>
+  nnoremap sa :<C-u>CtrlP<Space>
+  nnoremap sb :<C-u>CtrlPBuffer<CR>
+  nnoremap sd :<C-u>CtrlPDir<CR>
+  nnoremap sf :<C-u>CtrlP<CR>
+  nnoremap sl :<C-u>CtrlPLine<CR>
+  nnoremap sm :<C-u>CtrlPMRUFiles<CR>
+  nnoremap sq :<C-u>CtrlPQuickfix<CR>
+  nnoremap ss :<C-u>CtrlPMixed<CR>
+  nnoremap st :<C-u>CtrlPTag<CR>
+
+  let g:ctrlp_map = '<Nop>'
+  " Guess vcs root dir
+  let g:ctrlp_working_path_mode = 'ra'
+  " Open new file in current window
+  let g:ctrlp_open_new_file = 'r'
+  let g:ctrlp_extensions = ['tag', 'quickfix', 'dir', 'line', 'mixed']
+  let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:18'
+  let g:ctrlp_custom_ignore = {
+    \ 'dir': '\v[\/]\.(git|svn|node_modules|target)$',
+    \ 'file': '\v\.(exe|so|dll)$'
+    \ }
+
+  let g:sonictemplate_vim_template_dir = ['~/.vim/template']
+else
+  " colorscheme
+  set background=dark
+  colorscheme industry
+endif
 
 " FileType
 augroup MyFileType
